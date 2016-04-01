@@ -1,6 +1,5 @@
 var controllers = require("./controllers");
-var mid = require('./middleware');
-
+var mid = require("./middleware");
 var router = function(app)
 {
 	app.get("/login", mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
@@ -11,6 +10,7 @@ var router = function(app)
 	app.get("/maker", mid.requiresLogin, controllers.Domo.makerPage);
 	app.post("/maker", mid.requiresLogin, controllers.Domo.make);
 	app.get("/", mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+	app.get("/view", controllers.Domo.viewPage);
 };
 
 module.exports = router;

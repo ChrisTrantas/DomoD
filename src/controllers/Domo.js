@@ -9,8 +9,7 @@ var makerPage = function(req, res)
 		{
 			console.log(err);
 			return res.status(400).json({error: "An error occured"});
-		}
-		
+		}		
 		res.render("app", {domos: docs});
 	});
 };
@@ -26,6 +25,7 @@ var makeDomo = function(req, res)
 	{
 		name: req.body.name,
 		age: req.body.age,
+		favcolor: req.body.color,
 		owner: req.session.account._id
 	};
 	
@@ -37,11 +37,25 @@ var makeDomo = function(req, res)
 		{
 			console.log(err);
 			return res.status(400).json({error: "An error occured"});
-		}
-		
+		}		
 		res.json({redirect: "/maker"});
+	});
+};
+
+
+var viewPage = function(req, res)
+{
+	Domo.DomoModel.findAll(req.session.account._id, function(err, docs)
+	{
+		if(err)
+		{
+			console.log(err);
+			return res.status(400).json({error: "An error occured"});
+		}		
+		res.render("view",{domos: docs});
 	});
 };
 
 module.exports.makerPage = makerPage;
 module.exports.make = makeDomo;
+module.exports.viewPage = viewPage;
